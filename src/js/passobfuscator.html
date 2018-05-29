@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  </meta>
+  <style>
+form  { display: table;      clear: both; }
+p     { display: table-row;  }
+label { display: table-cell; }
+input { display: table-cell; clear: both; }
+  </style>
+  <body>
+    <form autocomplete="off">
+      <p><label>Clair  : </label><input type="checkbox" id="showi" onclick="toggleI()">
+         <input id="text" type="password" oninput="obfuscate()"></p>
+         <label></label></p>
+      <p><label>Passwd : </label><input type="checkbox" id="showo" onclick="toggleO()">
+         <input id="pass" type="password" value="">
+	 <input type="button" value="Copy" onclick="copyO()"></p>
+    </form>
+    <script>
+var elti = document.getElementById("text");
+var elto = document.getElementById("pass");
+function toggleI() {
+  var c = document.getElementById("showi");
+  elti.setAttribute("type", (c.checked) ? "text" : "password");
+}
+function toggleO() {
+  var c = document.getElementById("showo");
+  elto.setAttribute("type", (c.checked) ? "text" : "password");
+}
+function copyO() {
+  var s = elto.getAttribute("type");
+  elto.setAttribute("type", "text");
+  elto.select();
+  document.execCommand("copy");
+  elto.setAttribute("type", s);
+}
+function int32(v) {
+  const M31 = 2147483648;
+  const M32 = 4294967296;
+  v = v % M32;
+  if (v > M31-1) return v-M32;
+  if (v < -M31)  return v+M32;
+  return v;
+}
+function obfuscate() {
+  var c = elti.value;
+  console.log("text=[" + c + "]");
+  const mSet = "abcdefghijklmnopqrstuvwxyz0123456789";
+  var s32 = int32(9821 * c.length + 211327);
+  for (var i = 0; i < c.length; i++) s32 = int32((s32 << 1) ^ (c.charCodeAt(i)));
+  var o = "";
+  for (var i = 0; i < c.length; i++) {
+    s32 = int32(9821 * s32 + 211327);
+    var j = s32 % mSet.length;
+    if (j < 0) j += mSet.length;
+    o = o.concat(mSet.charAt(j));
+  }
+  elto.value = o;
+}
+    </script>
+  </body>
+</html>
+

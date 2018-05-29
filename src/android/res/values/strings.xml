@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pass Obfuscator</string>
+    <string name="humanclear">Version en clair</string>
+    <string name="obfuscated">Version brouillée</string>
+    <string name="show">Show</string>
+
+</resources>
